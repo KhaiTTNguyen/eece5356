@@ -1,0 +1,28 @@
+function [voice] = processVoice(fileName)
+%PROCESSVOICE Summary of this function goes here
+%   Detailed explanation goes here
+[x,Fs]=audioread(fileName);
+x=x(:,1);
+Twin=0.040; % 0.04sec, or 40ms 
+Nwin=round(Twin*Fs);
+Noverlap=round(Nwin/2); % 50% overlap
+NFFT = Nwin; % no zero-pad
+S=spectrogram(x,hamming(Nwin),Noverlap,NFFT,Fs);
+S=abs(S); 
+% 1st column is DFT(frame1)
+% 2nd column is DFT(frame2)
+% ....
+% row index = k: row1~k=0
+
+[nrows,ncols] = size(S);
+S=S(2:nrows,:); % or 2:round(nRows/2)
+
+% Normalize a frame
+for i=1:ncols
+    tmp=S(:,i);
+    S(:,i)=tmp/norm(tmp); % SUPER IMPORTANT to normalize
+end
+voice = S;
+
+end
+
