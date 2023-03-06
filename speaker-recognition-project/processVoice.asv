@@ -9,8 +9,8 @@ Noverlap=round(Nwin/2); % 50% overlap
 NFFT = Nwin; % no zero-pad
 S=spectrogram(x,hamming(Nwin),Noverlap,NFFT,Fs);
 S=abs(S); 
-% human brain/ear system primarily use the 'magnitude of the FT' rather than
-% 'phase of FT'
+% human brain/ear system primarily use theagnitude of the FT rather than
+% [ja
 % break speech signal into frames
 % 1st column is DFT(frame1)
 % 2nd column is DFT(frame2)
